@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="新建博客之路, TAOjian123456，github">
+    <meta name="keywords" content="网页蓝牙连接micro, TAOjian123456，github">
     <meta name="description" content="搞快点，我跟得上">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>新建博客之路 | 搞快点</title>
+    <title>网页蓝牙连接micro | 搞快点</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -272,12 +272,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/21.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">新建博客之路</h1>
+                    <h1 class="description center-align post-title">网页蓝牙连接micro</h1>
                 </div>
             </div>
         </div>
@@ -406,7 +406,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-04-03
+                    2020-06-16
                 </div>
                 
 
@@ -423,51 +423,25 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>首先，我参考了这位B站大佬的操作，完成了博客的基本框架的搭建。</p>
-<p><a href="https://www.bilibili.com/video/BV1cW411A7Jx?p=1" target="_blank" rel="noopener">https://www.bilibili.com/video/BV1cW411A7Jx?p=1</a></p>
-<p>注册一定要对，这个问题我发现百度真的是乱搞，第一个不是官网而是广告。一定要找到真正的官网去注册才代表你成功了。</p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403085533.png" alt=""></p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403091914.png" alt=""></p>
-<p>安装git</p>
-<p>为了把本地的网页文件上传到github上面去，我们需要用到分布式版本控制工具————Git[下载地址]。</p>
-<p>安装选项还是全部默认，只不过最后一步添加路径时选择Use Git from the Windows Command Prompt，这样我们就可以直接在命令提示符里打开git了。</p>
-<p>安装完成后在命令提示符中输入git –version验证是否安装成功。</p>
-<p>window需要安装git bash或者其他工具来支持git命令的使用。</p>
-<p>GitHub博客注册</p>
-<p>接下来就是去GitHub上注册一个git page来存放我们的博客静态页面。</p>
-<h2 id="GitHub博客注册"><a href="#GitHub博客注册" class="headerlink" title="GitHub博客注册"></a>GitHub博客注册</h2><p>接下来就是去GitHub上注册一个git page来存放我们的博客静态页面</p>
-<p>点击新增项目</p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403093217.png" alt=""></p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403093311.png" alt=""></p>
-<p>注意：一定要新建index，name要在github后面加上io</p>
-<p>创建完成之后呢，因为国内的特殊原因，我们睡一觉再去访问我们的git网站就可以看到，我们的网站已经建立好了。</p>
-<h2 id="配置SSH-key"><a href="#配置SSH-key" class="headerlink" title="配置SSH key"></a>配置SSH key</h2><p>这个我建议大家去看看我给的视频网站，因为有的东西还是实际操作的比较好。</p>
-<p>打开cmd，在blog我们的文件夹下输入，ssh-keygen -t rsa -C “邮箱地址”</p>
-<p>然后再c盘中找到.ssh就可以看到我们的迷药 ，复制下来打开github。</p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403093723.png" alt=""></p>
-<p>找到SSH and GPG keys</p>
-<p>复制进去我们刚才的密钥，每个人生成的目录地址可能不一样的。</p>
-<h3 id="检测是否添加成功"><a href="#检测是否添加成功" class="headerlink" title="检测是否添加成功"></a>检测是否添加成功</h3><p>ssh -T <a href="mailto:git@github.com">git@github.com</a> #邮箱</p>
-<h2 id="hexo"><a href="#hexo" class="headerlink" title="hexo"></a>hexo</h2><h3 id="安装hexo"><a href="#安装hexo" class="headerlink" title="安装hexo"></a>安装hexo</h3><p>npm install -g hexo-cli</p>
-<p>本地启动，可以看到初始的界面。（hexo s -p 5555）</p>
-<p>看到后，我们hexo g&amp;hexo d，注意一定要输入这两个命令，不然等于白做。</p>
-<h3>其他</h3>
-
-<p>其外的Github设置，密钥设置视频都有一步一步来就可以了。</p>
-<p>切记！一步一步的来！不要跳几个几秒看，本人就是吃了大亏。</p>
-<p>这个完成之后，就是主题的设置了，主题我选择了hexo-theme-matery，为什么要选择这个主题呢，因为这个主题比较漂亮，简洁。而且在优化方面有很多大佬已经帮你完善好了。</p>
-<h3 id="主题下载"><a href="#主题下载" class="headerlink" title="主题下载"></a>主题下载</h3><p>项目下面执行</p>
-<p>git clone <a href="https://github.com/blinkfox/hexo-theme-matery.git" target="_blank" rel="noopener">https://github.com/blinkfox/hexo-theme-matery.git</a> themes/matery</p>
-<p>更换根目录下的_config.yml配置文件中的theme参数</p>
-<p>Plugins: <a href="https://hexo.io/plugins/" target="_blank" rel="noopener">https://hexo.io/plugins/</a><br>Themes: <a href="https://hexo.io/themes/" target="_blank" rel="noopener">https://hexo.io/themes/</a><br>theme: matery</p>
-<p>其他的如个人设置这个就看自己的如何去做了。</p>
-<p>我做的如下界面。</p>
-<p><img src="http://q86guw610.bkt.clouddn.com/20200403094521.png" alt=""></p>
-<p>另外如何写博客文，我给大家一个比较不错的视频。</p>
-<p><a href="https://www.bilibili.com/video/av49292928/" target="_blank" rel="noopener">https://www.bilibili.com/video/av49292928/</a></p>
-<p>照着看，不会错，看完就等于结束，这样博客之路就开始了。</p>
-<p>最后不要忘记了 hexo g&amp;hexo d</p>
-<p>不然你的辛苦就全白费了！</p>
+                <h2 id="网页蓝牙的连接"><a href="#网页蓝牙的连接" class="headerlink" title="网页蓝牙的连接"></a>网页蓝牙的连接</h2><h3 id="首先，我们现了解下啥是网页蓝牙"><a href="#首先，我们现了解下啥是网页蓝牙" class="headerlink" title="首先，我们现了解下啥是网页蓝牙"></a>首先，我们现了解下啥是网页蓝牙</h3><p>网页蓝牙：通过渐进式 Web 应用（Progressive Web Apps）技术，你可以开发成熟的 Web 应用。 得益于大量新规范和新功能，以前需要在本机执行的应用，现在可以基于 Web 实现。 不过迄今为止，与硬件设备的交互仍然是遥不可及。 感谢 WebBluetooth 的出现，现在我们可以开发能够控制灯光、驾驶汽车甚至是无人机的 PWA。这个技术虽然现在还不是很成熟。</p>
+<ul>
+<li><p>本章任务</p>
+<p>使用网页蓝牙连接micro:bit板</p>
+<ol>
+<li><p>相关程序,创建html文件，输如下代码。</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            <span class="keyword">var</span> selected_device;           <span class="comment">// 保存用户选择的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected_server;           <span class="comment">//在第二课基础上添加的变量，保存用户连接的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected=<span class="literal">false</span>;            <span class="comment">//在第三课基础上添加的变量，保存电脑蓝牙的当前连接设备</span></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">discoverDevices</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"discoverDevices"</span>);     <span class="comment">//consol.log 控制台打印输出</span></span><br><span class="line">                <span class="keyword">var</span> options = &#123;<span class="attr">acceptAllDevices</span>:<span class="literal">true</span>&#125;        <span class="comment">//发现所有周边蓝牙设备</span></span><br><span class="line">                navigator.bluetooth.requestDevice(options)      <span class="comment">//Navigator对象，包含有关游览器的信息</span></span><br><span class="line">                .then(<span class="function"><span class="params">device</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Name:        '</span> + device.name);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Id:          '</span> + device.id);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Connected:   '</span> + device.gatt.connected);</span><br><span class="line">                    selected_device = device;</span><br><span class="line">                    <span class="built_in">console</span>.log(selected_device);</span><br><span class="line">                    connect();  </span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(<span class="function"><span class="params">error</span> =&gt;</span>&#123;</span><br><span class="line">                    alert(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">connect</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"connecting"</span>);</span><br><span class="line">                selected_device.gatt.connect()</span><br><span class="line">                .then(</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">server</span>)                            //表示连接成功</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected to"</span> + server.device.id);</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected="</span> + server.connected);</span><br><span class="line">                        connected_server = server;</span><br><span class="line">                        setConnectedStatus(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)                              //表示连接失败</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        alert(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        setConnectedStatus(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">setConnectedStatus</span>(<span class="params">status</span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                connected=status;</span><br><span class="line">                <span class="built_in">document</span>.getElementById(<span class="string">'status_connected'</span>).innerHTML=status;</span><br><span class="line">                <span class="keyword">if</span>(status==<span class="literal">true</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Disconnect"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Discover Devices"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>head&gt;</span><br><span class="line">    &lt;body&gt;       </span><br><span class="line">        &lt;h2&gt;</span><br><span class="line">            Status  &lt;!-- 显示蓝牙状态--&gt;</span><br><span class="line">        &lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">        &lt;table border="1"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">                &lt;td&gt;    &lt;b&gt;Connected&lt;/</span>b&gt;    &lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td id=<span class="string">"status_connected"</span>&gt;False&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">        &lt;<span class="regexp">/table&gt; </span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;Device Discovery &lt;/</span>h2&gt;     &lt;!-- 扫描/发现蓝牙设备 --&gt;</span><br><span class="line">        &lt;button id=<span class="string">"btn_scan"</span> onclick=<span class="string">"discoverDevices()"</span>&gt;</span><br><span class="line">            Start scan</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+</li>
+</ol>
+</li>
+</ul>
+<ol start="2">
+<li>打开浏览器，会发现如下：</li>
+</ol>
+<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616202430.png" alt=""></p>
+<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616202437.png" alt=""></p>
+<p>   如果在官网下载了测试程序的话，当Connected=true时表示连接成功。板子显示从D变为C</p>
+<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616180339.png" alt=""></p>
+<p>   到这，micro:bit就已经通过网页蓝牙连接啊。</p>
 
             </div>
             <hr/>
@@ -493,7 +467,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://TAOjian123456.github.io/2020/04/03/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2%E4%B9%8B%E8%B7%AF/">http://TAOjian123456.github.io/2020/04/03/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2%E4%B9%8B%E8%B7%AF/</a>
+                    <a href="http://TAOjian123456.github.io/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/">http://TAOjian123456.github.io/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -957,9 +931,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/">
                     <div class="card-image">
@@ -977,9 +952,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-16
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-16
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -988,6 +963,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -995,7 +971,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2020/04/03/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2%E4%B9%8B%E8%B7%AF/">
@@ -1027,7 +1003,6 @@ https://www.bilibili.com/video/BV1cW411A7Jx?p=1
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
