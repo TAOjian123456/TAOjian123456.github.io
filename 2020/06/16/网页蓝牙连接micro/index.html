@@ -429,7 +429,86 @@
 <p>使用网页蓝牙连接micro:bit板</p>
 <ol>
 <li><p>相关程序,创建html文件，输如下代码。</p>
-<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            <span class="keyword">var</span> selected_device;           <span class="comment">// 保存用户选择的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected_server;           <span class="comment">//在第二课基础上添加的变量，保存用户连接的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected=<span class="literal">false</span>;            <span class="comment">//在第三课基础上添加的变量，保存电脑蓝牙的当前连接设备</span></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">discoverDevices</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"discoverDevices"</span>);     <span class="comment">//consol.log 控制台打印输出</span></span><br><span class="line">                <span class="keyword">var</span> options = &#123;<span class="attr">acceptAllDevices</span>:<span class="literal">true</span>&#125;        <span class="comment">//发现所有周边蓝牙设备</span></span><br><span class="line">                navigator.bluetooth.requestDevice(options)      <span class="comment">//Navigator对象，包含有关游览器的信息</span></span><br><span class="line">                .then(<span class="function"><span class="params">device</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Name:        '</span> + device.name);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Id:          '</span> + device.id);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Connected:   '</span> + device.gatt.connected);</span><br><span class="line">                    selected_device = device;</span><br><span class="line">                    <span class="built_in">console</span>.log(selected_device);</span><br><span class="line">                    connect();  </span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(<span class="function"><span class="params">error</span> =&gt;</span>&#123;</span><br><span class="line">                    alert(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">connect</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"connecting"</span>);</span><br><span class="line">                selected_device.gatt.connect()</span><br><span class="line">                .then(</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">server</span>)                            //表示连接成功</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected to"</span> + server.device.id);</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected="</span> + server.connected);</span><br><span class="line">                        connected_server = server;</span><br><span class="line">                        setConnectedStatus(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)                              //表示连接失败</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        alert(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        setConnectedStatus(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">setConnectedStatus</span>(<span class="params">status</span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                connected=status;</span><br><span class="line">                <span class="built_in">document</span>.getElementById(<span class="string">'status_connected'</span>).innerHTML=status;</span><br><span class="line">                <span class="keyword">if</span>(status==<span class="literal">true</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Disconnect"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Discover Devices"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>head&gt;</span><br><span class="line">    &lt;body&gt;       </span><br><span class="line">        &lt;h2&gt;</span><br><span class="line">            Status  &lt;!-- 显示蓝牙状态--&gt;</span><br><span class="line">        &lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">        &lt;table border="1"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">                &lt;td&gt;    &lt;b&gt;Connected&lt;/</span>b&gt;    &lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td id=<span class="string">"status_connected"</span>&gt;False&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">        &lt;<span class="regexp">/table&gt; </span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;Device Discovery &lt;/</span>h2&gt;     &lt;!-- 扫描/发现蓝牙设备 --&gt;</span><br><span class="line">        &lt;button id=<span class="string">"btn_scan"</span> onclick=<span class="string">"discoverDevices()"</span>&gt;</span><br><span class="line">            Start scan</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
+<html>
+    <head>
+        <script>
+            var selected_device;           // 保存用户选择的蓝牙设备
+            var connected_server;           //在第二课基础上添加的变量，保存用户连接的蓝牙设备
+            var connected=false;            //在第三课基础上添加的变量，保存电脑蓝牙的当前连接设备
+            function discoverDevices()
+            {
+                console.log("discoverDevices");     //consol.log 控制台打印输出
+                var options = {acceptAllDevices:true}        //发现所有周边蓝牙设备
+                navigator.bluetooth.requestDevice(options)      //Navigator对象，包含有关游览器的信息
+                .then(device => {
+                    console.log('> Name:        ' + device.name);
+                    console.log('> Id:          ' + device.id);
+                    console.log('> Connected:   ' + device.gatt.connected);
+                    selected_device = device;
+                    console.log(selected_device);
+                    connect();  
+                })
+                .catch(error =>{
+                    alert('ERROR:' +error);
+                    console.log('ERROR:' +error);
+                });
+            }
+
+<pre><code>        function connect()
+        {
+            console.log(&quot;connecting&quot;);
+            selected_device.gatt.connect()
+            .then(
+                function(server)                            //表示连接成功
+                {
+                    console.log(&quot;Connected to&quot; + server.device.id);
+                    console.log(&quot;Connected=&quot; + server.connected);
+                    connected_server = server;
+                    setConnectedStatus(true);
+
+                },
+                function(error)                              //表示连接失败
+                {
+                    console.log(&quot;ERROR:could not connct-&quot; + error);
+                    alert(&quot;ERROR:could not connct-&quot; + error);
+                    setConnectedStatus(false);
+
+                }
+            );
+        }
+        function setConnectedStatus(status)
+        {
+            connected=status;
+            document.getElementById(&apos;status_connected&apos;).innerHTML=status;
+            if(status==true)
+            {
+                document.getElementById(&apos;btn_scan&apos;).innerHTML=&quot;Disconnect&quot;;
+            }
+            else
+            {
+                document.getElementById(&apos;btn_scan&apos;).innerHTML=&quot;Discover Devices&quot;;
+            }
+        }
+
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;       
+    &lt;h2&gt;
+        Status  &lt;!-- 显示蓝牙状态--&gt;
+    &lt;/h2&gt;
+    &lt;table border=&quot;1&quot;&gt;
+        &lt;tr&gt;
+            &lt;td&gt;    &lt;b&gt;Connected&lt;/b&gt;    &lt;/td&gt;
+        &lt;/tr&gt;
+        &lt;tr&gt;
+            &lt;td id=&quot;status_connected&quot;&gt;False&lt;/td&gt;
+        &lt;/tr&gt;
+    &lt;/table&gt; 
+    &lt;h2&gt;Device Discovery &lt;/h2&gt;     &lt;!-- 扫描/发现蓝牙设备 --&gt;
+    &lt;button id=&quot;btn_scan&quot; onclick=&quot;discoverDevices()&quot;&gt;
+        Start scan
+    &lt;/button&gt;
+&lt;/body&gt;</code></pre></html>
 </li>
 </ol>
 </li>
