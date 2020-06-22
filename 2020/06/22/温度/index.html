@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="网页蓝牙连接micro, TAOjian123456，github">
+    <meta name="keywords" content="温度, TAOjian123456，github">
     <meta name="description" content="搞快点，我跟得上">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>网页蓝牙连接micro | 搞快点</title>
+    <title>温度 | 搞快点</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -277,7 +277,7 @@
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">网页蓝牙连接micro</h1>
+                    <h1 class="description center-align post-title">温度</h1>
                 </div>
             </div>
         </div>
@@ -406,7 +406,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
-                    2020-06-16
+                    2020-06-22
                 </div>
                 
 
@@ -423,24 +423,269 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <h2 id="网页蓝牙的连接"><a href="#网页蓝牙的连接" class="headerlink" title="网页蓝牙的连接"></a>网页蓝牙的连接</h2><h3 id="首先，我们现了解下啥是网页蓝牙"><a href="#首先，我们现了解下啥是网页蓝牙" class="headerlink" title="首先，我们现了解下啥是网页蓝牙"></a>首先，我们现了解下啥是网页蓝牙</h3><p>网页蓝牙：通过渐进式 Web 应用（Progressive Web Apps）技术，你可以开发成熟的 Web 应用。 得益于大量新规范和新功能，以前需要在本机执行的应用，现在可以基于 Web 实现。 不过迄今为止，与硬件设备的交互仍然是遥不可及。 感谢 WebBluetooth 的出现，现在我们可以开发能够控制灯光、驾驶汽车甚至是无人机的 PWA。这个技术虽然现在还不是很成熟。</p>
-<ul>
-<li><p>本章任务</p>
-<p>使用网页蓝牙连接micro:bit板</p>
-<ol>
-<li>相关程序,创建html文件，输如下代码。<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">            <span class="keyword">var</span> selected_device;           <span class="comment">// 保存用户选择的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected_server;           <span class="comment">//在第二课基础上添加的变量，保存用户连接的蓝牙设备</span></span><br><span class="line">            <span class="keyword">var</span> connected=<span class="literal">false</span>;            <span class="comment">//在第三课基础上添加的变量，保存电脑蓝牙的当前连接设备</span></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">discoverDevices</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"discoverDevices"</span>);     <span class="comment">//consol.log 控制台打印输出</span></span><br><span class="line">                <span class="keyword">var</span> options = &#123;<span class="attr">acceptAllDevices</span>:<span class="literal">true</span>&#125;        <span class="comment">//发现所有周边蓝牙设备</span></span><br><span class="line">                navigator.bluetooth.requestDevice(options)      <span class="comment">//Navigator对象，包含有关游览器的信息</span></span><br><span class="line">                .then(<span class="function"><span class="params">device</span> =&gt;</span> &#123;</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Name:        '</span> + device.name);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Id:          '</span> + device.id);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'&gt; Connected:   '</span> + device.gatt.connected);</span><br><span class="line">                    selected_device = device;</span><br><span class="line">                    <span class="built_in">console</span>.log(selected_device);</span><br><span class="line">                    connect();  </span><br><span class="line">                &#125;)</span><br><span class="line">                .catch(<span class="function"><span class="params">error</span> =&gt;</span>&#123;</span><br><span class="line">                    alert(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                    <span class="built_in">console</span>.log(<span class="string">'ERROR:'</span> +error);</span><br><span class="line">                &#125;);</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">connect</span>(<span class="params"></span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                <span class="built_in">console</span>.log(<span class="string">"connecting"</span>);</span><br><span class="line">                selected_device.gatt.connect()</span><br><span class="line">                .then(</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">server</span>)                            //表示连接成功</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected to"</span> + server.device.id);</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"Connected="</span> + server.connected);</span><br><span class="line">                        connected_server = server;</span><br><span class="line">                        setConnectedStatus(<span class="literal">true</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;,</span><br><span class="line">                    <span class="function"><span class="keyword">function</span>(<span class="params">error</span>)                              //表示连接失败</span></span><br><span class="line"><span class="function">                    </span>&#123;</span><br><span class="line">                        <span class="built_in">console</span>.log(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        alert(<span class="string">"ERROR:could not connct-"</span> + error);</span><br><span class="line">                        setConnectedStatus(<span class="literal">false</span>);</span><br><span class="line"></span><br><span class="line">                    &#125;</span><br><span class="line">                );</span><br><span class="line">            &#125;</span><br><span class="line">            <span class="function"><span class="keyword">function</span> <span class="title">setConnectedStatus</span>(<span class="params">status</span>)</span></span><br><span class="line"><span class="function">            </span>&#123;</span><br><span class="line">                connected=status;</span><br><span class="line">                <span class="built_in">document</span>.getElementById(<span class="string">'status_connected'</span>).innerHTML=status;</span><br><span class="line">                <span class="keyword">if</span>(status==<span class="literal">true</span>)</span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Disconnect"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">                <span class="keyword">else</span></span><br><span class="line">                &#123;</span><br><span class="line">                    <span class="built_in">document</span>.getElementById(<span class="string">'btn_scan'</span>).innerHTML=<span class="string">"Discover Devices"</span>;</span><br><span class="line">                &#125;</span><br><span class="line">            &#125;</span><br><span class="line"></span><br><span class="line">        &lt;<span class="regexp">/script&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>head&gt;</span><br><span class="line">    &lt;body&gt;       </span><br><span class="line">        &lt;h2&gt;</span><br><span class="line">            Status  &lt;!-- 显示蓝牙状态--&gt;</span><br><span class="line">        &lt;<span class="regexp">/h2&gt;</span></span><br><span class="line"><span class="regexp">        &lt;table border="1"&gt;</span></span><br><span class="line"><span class="regexp">            &lt;tr&gt;</span></span><br><span class="line"><span class="regexp">                &lt;td&gt;    &lt;b&gt;Connected&lt;/</span>b&gt;    &lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">            &lt;tr&gt;</span><br><span class="line">                &lt;td id=<span class="string">"status_connected"</span>&gt;False&lt;<span class="regexp">/td&gt;</span></span><br><span class="line"><span class="regexp">            &lt;/</span>tr&gt;</span><br><span class="line">        &lt;<span class="regexp">/table&gt; </span></span><br><span class="line"><span class="regexp">        &lt;h2&gt;Device Discovery &lt;/</span>h2&gt;     &lt;!-- 扫描/发现蓝牙设备 --&gt;</span><br><span class="line">        &lt;button id=<span class="string">"btn_scan"</span> onclick=<span class="string">"discoverDevices()"</span>&gt;</span><br><span class="line">            Start scan</span><br><span class="line">        &lt;<span class="regexp">/button&gt;</span></span><br><span class="line"><span class="regexp">    &lt;/</span>body&gt;</span><br><span class="line">&lt;<span class="regexp">/html&gt;</span></span><br></pre></td></tr></table></figure>
-</li>
-</ol>
-</li>
-</ul>
-<ol start="2">
-<li>打开浏览器，会发现如下：</li>
-</ol>
-<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616202430.png" alt=""></p>
-<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616202437.png" alt=""></p>
-<p>   如果在官网下载了测试程序的话，当Connected=true时表示连接成功。板子显示从D变为C</p>
-<p>   <img src="https://cdn.jsdelivr.net/gh/sunflower-air/clouding/images/20200616180339.png" alt=""></p>
-<p>   到这，micro:bit就已经通过网页蓝牙连接啊。</p>
+                <p>1、通过读写特性读取BBC板名称</p>
+<p>2、控制LED灯的显示</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">&lt;html&gt;</span><br><span class="line">    &lt;head&gt;</span><br><span class="line">        &lt;script&gt;</span><br><span class="line">        var    selected_device;</span><br><span class="line">        var    connected_server;</span><br><span class="line">        var    connected&#x3D;false;</span><br><span class="line">        var    services_discovered&#x3D;false;</span><br><span class="line">         		&#x2F;&#x2F;在第5课上添加以下内容</span><br><span class="line">        &#x2F;&#x2F; presence of services and characteristics </span><br><span class="line">        var has_accelerometer_service &#x3D; false; </span><br><span class="line">        var has_accelerometer_data &#x3D; false; </span><br><span class="line">        var has_led_service &#x3D; false;</span><br><span class="line">        var has_led_matrix_state &#x3D; false; </span><br><span class="line">        var has_device_information_service &#x3D; false; </span><br><span class="line">        var has_model_name_string &#x3D; false; </span><br><span class="line">        var has_temperature_service &#x3D;false;    &#x2F;&#x2F;温度</span><br><span class="line">        var has_tem_temperature &#x3D; false;  </span><br><span class="line">         &#x2F;&#x2F; service UUIDs </span><br><span class="line">       ACCELEROMETER_SERVICE &#x3D; &#39;e95d0753-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line">       LED_SERVICE &#x3D; &#39;e95dd91d-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line">       DEVICE_INFORMATION_SERVICE &#x3D; &#39;0000180a-0000-1000-8000-00805f9b34fb&#39;;</span><br><span class="line">       TEMPERATURE_SERVICE &#x3D; &#39;e95d6100-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line">       &#x2F;&#x2F; characteristic UUIDs </span><br><span class="line">       ACCELEROMETER_DATA &#x3D; &#39;e95dca4b-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line">       LED_MATRIX_STATE  &#x3D; &#39;e95d7b77-251d-470a-a062-fa1922dfa9a8&#39;; </span><br><span class="line">       MODEL_NUMBER_STRING &#x3D; &#39;00002a24-0000-1000-8000-00805f9b34fb&#39;;</span><br><span class="line">       TEM_TEMPERATURE &#x3D; &#39;e95d1b25-251d-470a-a062-fa1922dfa9a8&#39;;  </span><br><span class="line">       &#x2F;&#x2F; cached characteristics var accelerometer_data; </span><br><span class="line">       var led_matrix_state; </span><br><span class="line">        var model_number_string;</span><br><span class="line">        var accelerometer_data;</span><br><span class="line">        var tem_temperature;    </span><br><span class="line">          &#x2F;&#x2F;</span><br><span class="line">        var service_count;</span><br><span class="line">         var services_discovered;</span><br><span class="line">         var characteristics_discovered;  </span><br><span class="line">         var characteristic_count ;               </span><br><span class="line">         function discoverOrdisconnectDevices()</span><br><span class="line">        &#123;</span><br><span class="line">            console.log(&quot;discoverOrdisconnectDevices&quot;);</span><br><span class="line">            if(!connected)</span><br><span class="line">            discoverDevices();</span><br><span class="line">            else</span><br><span class="line">            &#123;</span><br><span class="line">                selected_device.gatt.disconnect();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br></pre></td></tr></table></figure>
+
+
+<p>​        function onDisconnected()<br>​        {<br>​            console.log(“onDisconnected”);<br>​            resetUI();<br>​        }<br>​        //function input.temperature(): number;<br>​        function discoverDevices()<br>​        {<br>​            console.log(“discoverDevices”);<br>​            var options = {acceptAllDevices:true,<br>​                optionalServices: [DEVICE_INFORMATION_SERVICE, ACCELEROMETER_SERVICE, LED_SERVICE,TEMPERATURE_SERVICE]  //在第5节课上添加<br>​            }        //发现所有周边蓝牙设备<br>​           </p>
+<pre><code>        navigator.bluetooth.requestDevice(options)
+        .then(device =&gt; {
+            console.log(&apos;&gt; Name:&apos; + device.name);
+            console.log(&apos;&gt; Id:&apos; + device.id);
+            console.log(&apos;&gt; Connected:&apos; + device.gatt.connected);
+            selected_device = device;
+            console.log(selected_device);
+            connect();
+            })
+        .catch(error =&gt; {
+            alert(&apos;ERROR&apos; +error);
+            console.log(&apos;ERROR&apos; +error);
+            });       
+    }       
+    function connect()
+    {
+        console.log(&quot;connecting&quot;);
+        selected_device.gatt.connect()
+        .then(
+            function (server)
+            {
+                console.log(&quot;Connected to&quot; + server.device.id);
+                console.log(&quot;Connected &quot; + server.connected);
+                selected_device.addEventListener(&apos;gattserverdisconnected&apos;,onDisconnected);
+                connected_server =server;
+                discoverSvcsAndChars(); //在第5课基础上添加的函数
+                setConnectedStatus(true);
+            },
+            function (error)
+            {
+                console.log(&quot;ERROR:could not connct-&quot; + error);
+               alert(&quot;ERROR:could not connct-&quot; + error);
+               setConnectedStatus(false);
+            }
+        );
+    }
+    function setConnectedStatus(status)
+    {
+        connected=status;
+        document.getElementById(&apos;status_connected&apos;).innerHTML = status;
+        if(status==true)
+        {
+            document.getElementById(&apos;btn_scan&apos;).innerHTML = &quot;Disconnect&quot;;
+        }
+        else
+        {
+            document.getElementById(&apos;btn_scan&apos;).innerHTML = &quot;Discover Devices&quot;;
+        }
+    }
+    function setDiscoveryStatus(status)
+    {
+        services_discovered=status;
+        document.getElementById(&apos;status_discovered&apos;).innerHTML=status;
+    }
+
+    function resetUI()
+    {
+        setConnectedStatus(false);
+    }
+
+    function discoverSvcsAndChars()    //在第5课基础上添加的函数
+    {  
+        console.log(&quot;discoverSvcsAndChars server=&quot; + connected_server); 
+        connected_server.getPrimaryServices()
+        .then(services =&gt; 
+        {    
+                has_accelerometer_service = false;    
+                has_led_service = false;    
+                has_device_information_service = false; 
+                has_temperature_service= false;
+
+                services_discovered = 0;    
+                service_count = services.length;    
+                console.log(&quot;Got &quot; + service_count + &quot; services&quot;); 
+
+                services.forEach(service =&gt; 
+                {     
+                    if (service.uuid == ACCELEROMETER_SERVICE)
+                    {      
+                        has_accelerometer_service = true;    
+                    }   
+                    if (service.uuid == LED_SERVICE) 
+                    {      
+                        has_led_service = true;     
+                    }     
+                   if (service.uuid == DEVICE_INFORMATION_SERVICE) 
+                    {      
+                        has_device_information_service = true;     
+                    } 
+                    if (service.uuid == TEMPERATURE_SERVICE) //温度
+                    {      
+                        has_temperature_service = true;     
+                    }        
+                    console.log(&apos;Getting Characteristics for service &apos; + service.uuid);     
+                    service.getCharacteristics()
+                    .then(characteristics =&gt; 
+                    {      
+                        console.log(&apos;&gt; Service: &apos; + service.uuid);      
+                        services_discovered++;     
+                        characteristics_discovered = 0;      
+                        characteristic_count = characteristics.length;      
+                        characteristics.forEach(characteristic =&gt; 
+                        {       
+                            characteristics_discovered++;       
+                            console.log(&apos;&gt;&gt; Characteristic: &apos; + characteristic.uuid);       
+                            if (characteristic.uuid == ACCELEROMETER_DATA)
+                            {        
+                                accelerometer_data = characteristic;        
+                                has_accelerometer_data = true;       
+                            }      
+                            if (characteristic.uuid == LED_MATRIX_STATE) 
+                            {        
+                                led_matrix_state = characteristic;        
+                                has_led_matrix_state = true;       
+                            }       
+                            if (characteristic.uuid == MODEL_NUMBER_STRING) 
+                            {        
+                                model_number_string = characteristic;        
+                                has_model_name_string = true;       
+                            }
+                            if(characteristic.uuid == TEM_TEMPERATURE)  //温度
+                            {
+                                tem_temperature = characteristic; 
+                                has_tem_temperature = true;
+                            }     
+                            if (services_discovered == service_count &amp;&amp; characteristics_discovered == characteristic_count) 
+                            {        
+                                console.log(&quot;FINISHED DISCOVERY&quot;); 
+                                setDiscoveryStatus(true);       
+                                //setDiscoveryStatus(true);                  
+                            }    
+                        });     
+                    });    
+                });  
+        });
+    }  
+    function randomLEDs()   //第6课上添加
+    {  
+        console.log(&quot;randomLEDs&quot;);   
+        // state validation   
+        if (!connected) 
+        {     
+            alert(&quot;Error: Discover and connect to a device before using this function&quot;);     
+            return;   
+        }   
+        if (!services_discovered) 
+        {     
+            alert(&quot;Error: Service discovery has not yet completed&quot;);     
+            return;  
+        }   
+        if (!has_led_service) 
+        {     
+            alert(&quot;Error: The connected device does not contain the LED service&quot;);     
+            return;  
+        }   
+        if (!has_led_matrix_state) 
+        {      
+            alert(&quot;Error: The connected device does not contain the LED matrix state characteristic&quot;);      
+            return;   
+        }   
+        var led_array = [0, 0, 0, 0, 0];   
+
+         // Math.random():0~1  Math.floor(x):返回小于等于x的最大整数
+        led_array[0] =10;  
+        led_array[1] = 31;   
+        led_array[2] = 31;   
+        led_array[3] = 14;   
+        led_array[4] = 4;
+        /*led_array[0] = 31;  
+        led_array[1] = 17;   
+        led_array[2] = 17;   
+        led_array[3] = 17;   
+        led_array[4] = 31; */
+
+        var led_matrix_data = new Uint8Array(led_array); 
+
+        led_matrix_state.writeValue(led_matrix_data.buffer)
+        .then(_ =&gt; {   
+            console.log(&apos;LED matrix state changed&apos;);  
+            })  
+        .catch(error =&gt; {   
+            console.log(&apos;Error: &apos; + error);   
+            alert(&apos;Error: &apos; + error);   return;  
+            }); 
+    }  
+    function readModelNumber() 
+    {  
+        console.log(&quot;readModelNumber&quot;);   
+        // state validation   
+        if (!connected) 
+        {     
+            alert(&quot;Error: Discover and connect to a device before using this function&quot;);     
+            return;   
+        }   
+        if (!services_discovered) 
+        {     
+            alert(&quot;Error: Service discovery has not yet completed&quot;);     
+            return;   
+        }    
+        if (!has_device_information_service) 
+        {     
+            alert(&quot;Error: The connected device does not contain the device information service&quot;);     
+            return;   
+        }   
+        if (!has_model_name_string) 
+        {     
+            alert(&quot;Error: The connected device does not contain the model name string characteristic&quot;);     
+            return;   
+        }   
+
+        model_number_string.readValue()  
+        .then(value =&gt; {   
+            data = new Uint8Array(value.buffer);   
+            model_number_string = new TextDecoder(&quot;utf-8&quot;).decode(data);  
+            console.log(model_number_string);   
+            document.getElementById(&quot;model_number&quot;).innerHTML = model_number_string;  
+            })  
+        .catch(error =&gt; {  
+            console.log(&apos;Error: &apos; + error);   
+            alert(&apos;Error: &apos; + error);   
+            return;  
+            }); 
+        }     
+    &lt;/script&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h2&gt;  Status
+    &lt;/h2&gt;
+        &lt;table border=&quot;1&quot;&gt;
+            &lt;tr&gt;
+                &lt;td&gt;     &lt;b&gt;Connected&lt;/b&gt;   &lt;/td&gt;
+                &lt;td&gt;     &lt;b&gt;Service Discovery Completed&lt;/b&gt;   &lt;/td&gt;
+            &lt;/tr&gt;
+            &lt;tr&gt;
+                &lt;td id=&quot;status_connected&quot;&gt; false &lt;/td&gt;
+                &lt;td id=&quot;status_discovered&quot;&gt; false &lt;/td&gt;
+            &lt;/tr&gt;
+        &lt;/table&gt;
+        &lt;hr&gt;
+    &lt;h2&gt;
+        Device Discovery or Disconnect
+    &lt;/h2&gt;
+    &lt;button id = &quot;btn_scan&quot; onclick=&quot;discoverOrdisconnectDevices()&quot;&gt;Start scan&lt;/button&gt;
+    &lt;hr&gt;
+    &lt;h2&gt;Reading and Writing&lt;/h2&gt;
+    &lt;h3&gt;Write Characteristic - Randomise Lights&lt;/h3&gt;  
+    &lt;button id=&quot;btn_write&quot; onclick=&quot;randomLEDs()&quot;&gt;Randomise LEDs&lt;/button&gt;
+    &lt;h3&gt;Read Characteristic - Model number&lt;/h3&gt;  
+    &lt;button id=&quot;btn_read&quot; onclick=&quot;readModelNumber()&quot;&gt;Read Model number&lt;/button&gt; 
+    &lt;div id=&quot;model_number&quot;&gt;&lt;/div&gt;
+    &lt;hr&gt;
+&lt;/body&gt;</code></pre></html>
+
+<p><strong>3.发现温度服务</strong>  </p>
+<p><img src="https://imgwdnm.oss-cn-hangzhou.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720200622112810.jpg" alt=""></p>
+<h2 id="led的显示效果："><a href="#led的显示效果：" class="headerlink" title="led的显示效果："></a>led的显示效果：</h2><p><img src="https://imgwdnm.oss-cn-hangzhou.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720200622112753.jpg" alt=""></p>
+<p><img src="https://imgwdnm.oss-cn-hangzhou.aliyuncs.com/QQ%E5%9B%BE%E7%89%8720200622112806.jpg" alt=""></p>
 
             </div>
             <hr/>
@@ -466,7 +711,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="http://TAOjian123456.github.io/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/">http://TAOjian123456.github.io/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/</a>
+                    <a href="http://TAOjian123456.github.io/2020/06/22/%E6%B8%A9%E5%BA%A6/">http://TAOjian123456.github.io/2020/06/22/%E6%B8%A9%E5%BA%A6/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -930,9 +1175,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2020/06/22/%E6%B8%A9%E5%BA%A6/">
                     <div class="card-image">
@@ -952,9 +1198,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-06-22
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-22
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-user fa-fw"></i>
@@ -963,6 +1209,7 @@
                         </span>
                     </div>
                 </div>
+
                 
             </div>
         </div>
@@ -973,26 +1220,24 @@
                 下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2020/04/03/%E6%96%B0%E5%BB%BA%E5%8D%9A%E5%AE%A2%E4%B9%8B%E8%B7%AF/">
+                <a href="/2020/06/16/%E7%BD%91%E9%A1%B5%E8%93%9D%E7%89%99%E8%BF%9E%E6%8E%A5micro/">
                     <div class="card-image">
                         
                         
-                        <img src="/medias/featureimages/18.jpg" class="responsive-img" alt="新建博客之路">
+                        <img src="/medias/featureimages/21.jpg" class="responsive-img" alt="网页蓝牙连接micro">
                         
-                        <span class="card-title">新建博客之路</span>
+                        <span class="card-title">网页蓝牙连接micro</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            首先，我参考了这位B站大佬的操作，完成了博客的基本框架的搭建。
-https://www.bilibili.com/video/BV1cW411A7Jx?p=1
-注册一定要对，这个问题我发现百度真的是乱搞，第一个不是官网而是广告。一定要找到真
+                            网页蓝牙的连接首先，我们现了解下啥是网页蓝牙网页蓝牙：通过渐进式 Web 应用（Progressive Web Apps）技术，你可以开发成熟的 Web 应用。 得益于大量新规范和新功能，以前需要在本机执行的应用，现在可以基于 Web 实现
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2020-04-03
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-16
                             </span>
                         <span class="publish-author">
                             
