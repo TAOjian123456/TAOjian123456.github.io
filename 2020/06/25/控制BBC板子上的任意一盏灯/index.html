@@ -424,646 +424,6 @@
         <div class="card-content article-card-content">
             <div id="articleContent">
                 <h1 id="任意控制板上任意一盏灯"><a href="#任意控制板上任意一盏灯" class="headerlink" title="任意控制板上任意一盏灯"></a>任意控制板上任意一盏灯</h1><p>说明：蓝牙板子上有5*5的矩阵小灯，那么写出25个按键对应小灯就可以了。</p>
-<head>
-    <script>
-    var    selected_device; //选择设备
-    var    connected_server; //连接设备
-    var    connected=false;//连接状态
-    var    services_discovered=false;//发现设备状态
-    var c=[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-    // 添加服务和特性状态变量 
-    var has_accelerometer_service = false; //加速度服务状态
-    var has_accelerometer_data = false; //加速度特性状态
-    var has_led_service = false;//led服务状态
-    var has_led_matrix_state = false; //led控制特性状态
-    var has_device_information_service = false; //设备信息服务状态
-    var has_model_name_string = false; //设备信息特性状态
-    var has_temperature_service =false;    //温度服务状态
-    var has_tem_temperature = false;  //温度特性状态
-     // 服务 UUIDs 
-   ACCELEROMETER_SERVICE = 'e95d0753-251d-470a-a062-fa1922dfa9a8'; 
-   LED_SERVICE = 'e95dd91d-251d-470a-a062-fa1922dfa9a8'; 
-   DEVICE_INFORMATION_SERVICE = '0000180a-0000-1000-8000-00805f9b34fb';
-   TEMPERATURE_SERVICE = 'e95d6100-251d-470a-a062-fa1922dfa9a8'; 
-   // 特性 UUIDs 
-   ACCELEROMETER_DATA = 'e95dca4b-251d-470a-a062-fa1922dfa9a8'; 
-   LED_MATRIX_STATE  = 'e95d7b77-251d-470a-a062-fa1922dfa9a8'; 
-   MODEL_NUMBER_STRING = '00002a24-0000-1000-8000-00805f9b34fb';
-   TEM_TEMPERATURE = 'e95d1b25-251d-470a-a062-fa1922dfa9a8';  
-   // 添加特性变量 
-   var led_matrix_state; 
-    var model_number_string;
-    var accelerometer_data;
-    var tem_temperature;    
-      //添加服务，特性相关参数
-    var service_count;
-     var services_discovered;
-     var characteristics_discovered;  
-     var characteristic_count ;               
-     function discoverOrdisconnectDevices()// 断开连接
-    {
-        console.log("discoverOrdisconnectDevices");
-        if(!connected)
-        discoverDevices();
-        else
-        {
-            selected_device.gatt.disconnect();
-        }
-    }
-
-<pre><code>function onDisconnected()//连接
-{
-    console.log(&quot;onDisconnected&quot;);
-    resetUI();
-}
-//function input.temperature(): number;
-function discoverDevices()// 搜索设备函数
-{ 
-    console.log(&quot;discoverDevices&quot;);
-    var options = {acceptAllDevices:true,
-        optionalServices: [DEVICE_INFORMATION_SERVICE, ACCELEROMETER_SERVICE, LED_SERVICE,TEMPERATURE_SERVICE]  //在第5节课上添加
-    }        //发现所有周边蓝牙设备
-
-    navigator.bluetooth.requestDevice(options)
-    .then(device =&gt; {
-        console.log(&apos;&gt; Name:&apos; + device.name);
-        console.log(&apos;&gt; Id:&apos; + device.id);
-        console.log(&apos;&gt; Connected:&apos; + device.gatt.connected);
-        selected_device = device;
-        console.log(selected_device);
-        connect();
-        })
-    .catch(error =&gt; {
-        alert(&apos;ERROR&apos; +error);
-        console.log(&apos;ERROR&apos; +error);
-        });       
-}       
-function connect()    //连接函数
-{
-    console.log(&quot;connecting&quot;);
-    selected_device.gatt.connect()
-    .then(
-        function (server)
-        {
-            console.log(&quot;Connected to&quot; + server.device.id);
-            console.log(&quot;Connected &quot; + server.connected);
-            selected_device.addEventListener(&apos;gattserverdisconnected&apos;,onDisconnected);
-            connected_server =server;
-            discoverSvcsAndChars(); //在第5课基础上添加的函数
-            setConnectedStatus(true);
-        },
-        function (error)
-        {
-            console.log(&quot;ERROR:could not connct-&quot; + error);
-           alert(&quot;ERROR:could not connct-&quot; + error);
-           setConnectedStatus(false);
-        }
-    );
-}
-function setConnectedStatus(status)//设置连接状态
-{
-    connected=status;
-    document.getElementById(&apos;status_connected&apos;).innerHTML = status;
-    if(status==true)
-    {
-        document.getElementById(&apos;btn_scan&apos;).innerHTML = &quot;Disconnect&quot;;
-    }
-    else
-    {
-        document.getElementById(&apos;btn_scan&apos;).innerHTML = &quot;Discover Devices&quot;;
-    }
-}
-function setDiscoveryStatus(status)//设置发现状态
-{
-    services_discovered=status;
-    document.getElementById(&apos;status_discovered&apos;).innerHTML=status;
-}
-
-function resetUI()    //重置页面
-{
-    setConnectedStatus(false);
-}
-
-function discoverSvcsAndChars()    //发现服务和特性
-{  
-    console.log(&quot;discoverSvcsAndChars server=&quot; + connected_server); 
-    connected_server.getPrimaryServices()
-    .then(services =&gt; 
-    {    
-            has_accelerometer_service = false;    
-            has_led_service = false;    
-            has_device_information_service = false; 
-            has_temperature_service= false;
-
-            services_discovered = 0;    
-            service_count = services.length;    
-            console.log(&quot;Got &quot; + service_count + &quot; services&quot;); 
-
-            services.forEach(service =&gt; 
-            {     
-                if (service.uuid == ACCELEROMETER_SERVICE)
-                {      
-                    has_accelerometer_service = true;    
-                }   
-                if (service.uuid == LED_SERVICE) 
-                {      
-                    has_led_service = true;     
-                }     
-               if (service.uuid == DEVICE_INFORMATION_SERVICE) 
-                {      
-                    has_device_information_service = true;     
-                } 
-                if (service.uuid == TEMPERATURE_SERVICE) //温度
-                {      
-                    has_temperature_service = true;     
-                }        
-                console.log(&apos;Getting Characteristics for service &apos; + service.uuid);     
-                service.getCharacteristics()
-                .then(characteristics =&gt; 
-                {      
-                    console.log(&apos;&gt; Service: &apos; + service.uuid);      
-                    services_discovered++;     
-                    characteristics_discovered = 0;      
-                    characteristic_count = characteristics.length;      
-                    characteristics.forEach(characteristic =&gt; 
-                    {       
-                        characteristics_discovered++;       
-                        console.log(&apos;&gt;&gt; Characteristic: &apos; + characteristic.uuid);       
-                        if (characteristic.uuid == ACCELEROMETER_DATA)
-                        {        
-                            accelerometer_data = characteristic;        
-                            has_accelerometer_data = true;       
-                        }      
-                        if (characteristic.uuid == LED_MATRIX_STATE) 
-                        {        
-                            led_matrix_state = characteristic;        
-                            has_led_matrix_state = true;       
-                        }       
-                        if (characteristic.uuid == MODEL_NUMBER_STRING) 
-                        {        
-                            model_number_string = characteristic;        
-                            has_model_name_string = true;       
-                        }
-                        if(characteristic.uuid == TEM_TEMPERATURE)  //温度
-                        {
-                            tem_temperature = characteristic; 
-                            has_tem_temperature = true;
-                        }     
-                        if (services_discovered == service_count &amp;&amp; characteristics_discovered == characteristic_count) 
-                        {        
-                            console.log(&quot;FINISHED DISCOVERY&quot;); 
-                            setDiscoveryStatus(true);       
-                            //setDiscoveryStatus(true);                  
-                        }    
-                    });     
-                });    
-            });  
-    });
-}  
-var i=0,j=0;
-function randomLEDs(ct)   //控制led
-{  
-    console.log(&quot;randomLEDs&quot;);   
-    // state validation   
-    if (!connected) 
-    {     
-        alert(&quot;Error: Discover and connect to a device before using this function&quot;);     
-        return;   
-    }   
-    if (!services_discovered) 
-    {     
-        alert(&quot;Error: Service discovery has not yet completed&quot;);     
-        return;  
-    }   
-    if (!has_led_service) 
-    {     
-        alert(&quot;Error: The connected device does not contain the LED service&quot;);     
-        return;  
-    }   
-    if (!has_led_matrix_state) 
-    {      
-        alert(&quot;Error: The connected device does not contain the LED matrix state characteristic&quot;);      
-        return;   
-    }   
-    var led_array=[];
-    if(ct==0)
-    {
-         led_array[0] =    1&lt;&lt;i;
-         led_array[1] = 1&lt;&lt;i;   
-         led_array[2] = 1&lt;&lt;i;   
-         led_array[3] = 1&lt;&lt;i;   
-         led_array[4] = 1&lt;&lt;i;
-         i++;
-         if(i==5)i=0;
-    }
-    else if(ct==1)
-    {
-        led_array[0] = 0;
-        led_array[1] = 0;   
-        led_array[2] = 0;   
-        led_array[3] = 0;   
-        led_array[4] = 0;
-        led_array[j] = 31;
-        j++;
-        if(j==5)j=0;
-    }
-
-
-     // Math.random():0~1  Math.floor(x):返回小于等于x的最大整数
-    /*led_array[0] =10;  
-    led_array[1] = 31;   
-    led_array[2] = 31;   
-    led_array[3] = 14;   
-    led_array[4] = 4;*/
-    /*led_array[0] = 31;  
-    led_array[1] = 17;   
-    led_array[2] = 17;   
-    led_array[3] = 17;   
-    led_array[4] = 31; */
-
-    var led_matrix_data = new Uint8Array(led_array); 
-
-    led_matrix_state.writeValue(led_matrix_data.buffer)
-    .then(_ =&gt; {   
-        console.log(&apos;LED matrix state changed&apos;);  
-        })  
-    .catch(error =&gt; {   
-        console.log(&apos;Error: &apos; + error);   
-        alert(&apos;Error: &apos; + error);   return;  
-        }); 
-}  
-function readModelNumber()  // 蓝牙信息服务
-{  
-    console.log(&quot;readModelNumber&quot;);   
-    // state validation   
-    if (!connected) 
-    {     
-        alert(&quot;Error: Discover and connect to a device before using this function&quot;);     
-        return;   
-    }   
-    if (!services_discovered) 
-    {     
-        alert(&quot;Error: Service discovery has not yet completed&quot;);     
-        return;   
-    }    
-    if (!has_device_information_service) 
-    {     
-        alert(&quot;Error: The connected device does not contain the device information service&quot;);     
-        return;   
-    }   
-    if (!has_model_name_string) 
-    {     
-        alert(&quot;Error: The connected device does not contain the model name string characteristic&quot;);     
-        return;   
-    }   
-
-    model_number_string.readValue()
-    .then(value =&gt; {   
-        data = new Uint8Array(value.buffer);   
-        model_number_string = new TextDecoder(&quot;utf-8&quot;).decode(data);  
-        console.log(model_number_string);   
-        document.getElementById(&quot;model_number&quot;).innerHTML = model_number_string;  
-        })  
-    .catch(error =&gt; {  
-        console.log(&apos;Error: &apos; + error);   
-        alert(&apos;Error: &apos; + error);   
-        return;  
-        }); 
-    }
-
-          function accelerometer()   //加速度传感器
-         {  
-             console.log(&quot;accelerometer&quot;);   
-             // state validation   
-             if (!connected) 
-             {     
-                 alert(&quot;Error: Discover and connect to a device before using this function&quot;);     
-                 return;   
-             }   
-             if (!services_discovered) 
-             {     
-                 alert(&quot;Error: Service discovery has not yet completed&quot;);     
-                 return;  
-             }   
-             if (!has_accelerometer_service) 
-             {     
-                 alert(&quot;Error: The connected device does not contain the accelerometer service&quot;);     
-                 return;  
-             }   
-             if (!has_accelerometer_data) 
-             {      
-                 alert(&quot;Error: The connected device does not contain the accelerometer_data characteristic&quot;);      
-                 return;   
-             }   
-
-             accelerometer_data.readValue()
-            .then(value =&gt; {
-              buffer = value.buffer;
-              dataview = new DataView(buffer);
-              X = dataview.getUint16(0, true);
-              Y = dataview.getUint16(2, true);
-              Z = dataview.getUint16(4, true);
-              console.log(&quot;X=&quot; + X + &quot;, Y=&quot; + Y + &quot;, Z+&quot; + Z);
-              document.getElementById(&quot;ac_data&quot;).innerHTML = &quot;X=&quot; + X + &quot;, Y=&quot; + Y + &quot;,Z=&quot; + Z;
-                })  
-            .catch(error =&gt; {  
-                console.log(&apos;Error: &apos; + error);   
-                alert(&apos;Error: &apos; + error);   
-                return;  
-                }); </code></pre><p>}<br>function led00()              //第一行<br>       {<br>           if(c[0]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;4);<br>               c[0]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(<del>(1&lt;&lt;4));<br>               c[0]=0;<br>           }<br>           randLED();<br>       }<br>       function led01()<br>       {<br>           if(c[1]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;3);<br>               c[1]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(</del>(1&lt;&lt;3));<br>               c[1]=0;<br>           }<br>           randLED();<br>       }<br>       function led02()<br>       {<br>           if(c[2]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;2);<br>               c[2]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(<del>(1&lt;&lt;2));<br>               c[2]=0;<br>           }<br>           randLED();<br>       }<br>       function led03()<br>       {<br>           if(c[3]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;1);<br>               c[3]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(</del>(1&lt;&lt;1));<br>               c[3]=0;<br>           }<br>           randLED();<br>       }<br>       function led04()<br>       {<br>           if(c[4]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;0);<br>               c[4]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(~(1&lt;&lt;0));<br>               c[4]=0;<br>           }<br>           randLED();<br>       }</p>
-<pre><code>   function led10()                   //第二行
-   {
-       if(c[5]==0)
-       {
-           led[1]=led[1]|(1&lt;&lt;4);
-           c[5]=1;
-       }
-       else{
-           led[1]=led[1]&amp;(~(1&lt;&lt;4));
-           c[5]=0;
-       }
-       randLED();
-   }
-   function led11()
-   {
-       if(c[6]==0)
-       {
-           led[1]=led[1]|(1&lt;&lt;3);
-           c[6]=1;
-       }
-       else{
-           led[1]=led[1]&amp;(~(1&lt;&lt;3));
-           c[6]=0;
-       }
-       randLED();
-   }
-   function led12()
-   {
-       if(c[7]==0)
-       {
-           led[1]=led[1]|(1&lt;&lt;2);
-           c[7]=1;
-       }
-       else{
-           led[1]=led[1]&amp;(~(1&lt;&lt;2));
-           c[7]=0;
-       }
-       randLED();
-   }
-   function led13()
-   {
-       if(c[8]==0)
-       {
-           led[1]=led[1]|(1&lt;&lt;1);
-           c[8]=1;
-       }
-       else{
-           led[1]=led[1]&amp;(~(1&lt;&lt;1));
-           c[8]=0;
-       }
-       randLED();
-   }
-   function led14()
-   {
-       if(c[9]==0)
-       {
-           led[1]=led[1]|(1&lt;&lt;0);
-           c[9]=1;
-       }
-       else{
-           led[1]=led[1]&amp;(~(1&lt;&lt;0));
-           c[9]=0;
-       }
-       randLED();
-   }
-
-   function led20()                   //第三行
-   {
-       if(c[10]==0)
-       {
-           led[2]=led[2]|(1&lt;&lt;4);
-           c[10]=1;
-       }
-       else{
-           led[2]=led[2]&amp;(~(1&lt;&lt;4));
-           c[10]=0;
-       }
-       randLED();
-   }
-   function led21()
-   {
-       if(c[11]==0)
-       {
-           led[2]=led[2]|(1&lt;&lt;3);
-           c[11]=1;
-       }
-       else{
-           led[2]=led[2]&amp;(~(1&lt;&lt;3));
-           c[11]=0;
-       }
-       randLED();
-   }
-   function led22()
-   {
-       if(c[12]==0)
-       {
-           led[2]=led[2]|(1&lt;&lt;2);
-           c[12]=1;
-       }
-       else{
-           led[2]=led[2]&amp;(~(1&lt;&lt;2));
-           c[12]=0;
-       }
-       randLED();
-   }
-   function led23()
-   {
-       if(c[13]==0)
-       {
-           led[2]=led[2]|(1&lt;&lt;1);
-           c[13]=1;
-       }
-       else{
-           led[2]=led[2]&amp;(~(1&lt;&lt;1));
-           c[13]=0;
-       }
-       randLED();
-   }
-   function led24()
-   {
-       if(c[14]==0)
-       {
-           led[2]=led[2]|(1&lt;&lt;0);
-           c[14]=1;
-       }
-       else{
-           led[2]=led[2]&amp;(~(1&lt;&lt;0));
-           c[14]=0;
-       }
-       randLED();
-   }
-
-   function led30()                   //第四行
-   {
-       if(c[15]==0)
-       {
-           led[3]=led[3]|(1&lt;&lt;4);
-           c[15]=1;
-       }
-       else{
-           led[3]=led[3]&amp;(~(1&lt;&lt;4));
-           c[15]=0;
-       }
-       randLED();
-   }
-   function led31()
-   {
-       if(c[16]==0)
-       {
-           led[3]=led[3]|(1&lt;&lt;3);
-           c[16]=1;
-       }
-       else{
-           led[3]=led[3]&amp;(~(1&lt;&lt;3));
-           c[16]=0;
-       }
-       randLED();
-   }
-   function led32()
-   {
-       if(c[17]==0)
-       {
-           led[3]=led[3]|(1&lt;&lt;2);
-           c[17]=1;
-       }
-       else{
-           led[3]=led[3]&amp;(~(1&lt;&lt;2));
-           c[17]=0;
-       }
-       randLED();
-   }
-   function led33()
-   {
-       if(c[18]==0)
-       {
-           led[3]=led[3]|(1&lt;&lt;1);
-           c[18]=1;
-       }
-       else{
-           led[3]=led[3]&amp;(~(1&lt;&lt;1));
-           c[18]=0;
-       }
-       randLED();
-   }
-   function led34()
-   {
-       if(c[19]==0)
-       {
-           led[3]=led[3]|(1&lt;&lt;0);
-           c[19]=1;
-       }
-       else{
-           led[3]=led[3]&amp;(~(1&lt;&lt;0));
-           c[19]=0;
-       }
-       randLED();
-   }
-   function led40()                   //第五行
-   {
-       if(c[20]==0)
-       {
-           led[4]=led[4]|(1&lt;&lt;4);
-           c[20]=1;
-       }
-       else{
-           led[4]=led[4]&amp;(~(1&lt;&lt;4));
-           c[20]=0;
-       }
-       randLED();
-   }
-   function led41()
-   {
-       if(c[21]==0)
-       {
-           led[4]=led[4]|(1&lt;&lt;3);
-           c[21]=1;
-       }
-       else{
-           led[4]=led[4]&amp;(~(1&lt;&lt;3));
-           c[21]=0;
-       }
-       randLED();
-   }
-   function led42()
-   {
-       if(c[22]==0)
-       {
-           led[4]=led[4]|(1&lt;&lt;2);
-           c[22]=1;
-       }
-       else{
-           led[4]=led[4]&amp;(~(1&lt;&lt;2));
-           c[22]=0;
-       }
-       randLED();
-   }
-   function led43()
-   {
-       if(c[23]==0)
-       {
-           led[4]=led[4]|(1&lt;&lt;1);
-           c[23]=1;
-       }
-       else{
-           led[4]=led[4]&amp;(~(1&lt;&lt;1));
-           c[23]=0;
-       }
-       randLED();
-   }
-   function led44()
-   {
-       if(c[24]==0)
-       {
-           led[4]=led[4]|(1&lt;&lt;0);
-           c[24]=1;
-       }
-       else{
-           led[4]=led[4]&amp;(~(1&lt;&lt;0));
-           c[24]=0;
-       }
-       randLED();
-   }
-&lt;/script&gt;</code></pre><meta name="generator" content="Hexo 4.2.0"></head>
-<body>
-    <h2>  Status
-    </h2>
-        <table border="1">
-            <tr>
-                <td>     <b>Connected</b>   </td>
-                <td>     <b>Service Discovery Completed</b>   </td>
-            </tr>
-            <tr>
-                <td id="status_connected"> false </td>
-                <td id="status_discovered"> false </td>
-            </tr>
-        </table>
-        <hr>
-    <h2>
-        Device Discovery or Disconnect
-    </h2>
-    <button id = "btn_scan" onclick="discoverOrdisconnectDevices()">Start scan</button>
-    <hr>
-    <h2>Reading and Writing</h2>
-    <h3>Write Characteristic - Randomise Lights</h3>  
-    <button id="btn_write" onclick="randomLEDs(0)">控制led行</button>
-    <button id="btu_write" onclick="randomLEDs(1)">控制led列</button>
-    <h3>Read Characteristic - Model number</h3>  
-    <button id="btn_read" onclick="readModelNumber()">Read Model number</button> 
-    <div id="model_number"></div>
-    <h3>accelerometer_data</h3>
-    <button id="btn_readAC" onclick="accelerometer()">Read accelerometer_data</button> 
-    <div id="ac_data"></div>
-    <hr>
 <h3>控制单个小灯亮暗</h3> 
        <button id="led00" onclick="led00()">第一行第一列</button>
        <button id="led01" onclick="led01()">第一行第二列</button>
@@ -1095,9 +455,269 @@ function readModelNumber()  // 蓝牙信息服务
        <button id="led43" onclick="led43()">第五行第四列</button>
        <button id="led44" onclick="led44()">第五行第五列</button>
 
-<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true,"react":{"opacity":0.7}}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true,"react":{"opacity":0.7}}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true,"react":{"opacity":0.7}}});</script><script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"log":false,"model":{"jsonPath":"/live2dw/assets/z16.model.json"},"display":{"position":"left","width":150,"height":300},"mobile":{"show":true,"react":{"opacity":0.7}}});</script></body>
+<p>function led00()              //第一行<br>       {<br>           if(c[0]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;4);<br>               c[0]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(<del>(1&lt;&lt;4));<br>               c[0]=0;<br>           }<br>           randLED();<br>       }<br>       function led01()<br>       {<br>           if(c[1]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;3);<br>               c[1]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(</del>(1&lt;&lt;3));<br>               c[1]=0;<br>           }<br>           randLED();<br>       }<br>       function led02()<br>       {<br>           if(c[2]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;2);<br>               c[2]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(<del>(1&lt;&lt;2));<br>               c[2]=0;<br>           }<br>           randLED();<br>       }<br>       function led03()<br>       {<br>           if(c[3]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;1);<br>               c[3]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(</del>(1&lt;&lt;1));<br>               c[3]=0;<br>           }<br>           randLED();<br>       }<br>       function led04()<br>       {<br>           if(c[4]==0)<br>           {<br>               led[0]=led[0]|(1&lt;&lt;0);<br>               c[4]=1;<br>           }<br>           else{<br>               led[0]=led[0]&amp;(~(1&lt;&lt;0));<br>               c[4]=0;<br>           }<br>           randLED();<br>       }</p>
+<pre><code>function led10()                   //第二行
+{
+    if(c[5]==0)
+    {
+        led[1]=led[1]|(1&lt;&lt;4);
+        c[5]=1;
+    }
+    else{
+        led[1]=led[1]&amp;(~(1&lt;&lt;4));
+        c[5]=0;
+    }
+    randLED();
+}
+function led11()
+{
+    if(c[6]==0)
+    {
+        led[1]=led[1]|(1&lt;&lt;3);
+        c[6]=1;
+    }
+    else{
+        led[1]=led[1]&amp;(~(1&lt;&lt;3));
+        c[6]=0;
+    }
+    randLED();
+}
+function led12()
+{
+    if(c[7]==0)
+    {
+        led[1]=led[1]|(1&lt;&lt;2);
+        c[7]=1;
+    }
+    else{
+        led[1]=led[1]&amp;(~(1&lt;&lt;2));
+        c[7]=0;
+    }
+    randLED();
+}
+function led13()
+{
+    if(c[8]==0)
+    {
+        led[1]=led[1]|(1&lt;&lt;1);
+        c[8]=1;
+    }
+    else{
+        led[1]=led[1]&amp;(~(1&lt;&lt;1));
+        c[8]=0;
+    }
+    randLED();
+}
+function led14()
+{
+    if(c[9]==0)
+    {
+        led[1]=led[1]|(1&lt;&lt;0);
+        c[9]=1;
+    }
+    else{
+        led[1]=led[1]&amp;(~(1&lt;&lt;0));
+        c[9]=0;
+    }
+    randLED();
+}
 
-<p>效果如图：</p>
+function led20()                   //第三行
+{
+    if(c[10]==0)
+    {
+        led[2]=led[2]|(1&lt;&lt;4);
+        c[10]=1;
+    }
+    else{
+        led[2]=led[2]&amp;(~(1&lt;&lt;4));
+        c[10]=0;
+    }
+    randLED();
+}
+function led21()
+{
+    if(c[11]==0)
+    {
+        led[2]=led[2]|(1&lt;&lt;3);
+        c[11]=1;
+    }
+    else{
+        led[2]=led[2]&amp;(~(1&lt;&lt;3));
+        c[11]=0;
+    }
+    randLED();
+}
+function led22()
+{
+    if(c[12]==0)
+    {
+        led[2]=led[2]|(1&lt;&lt;2);
+        c[12]=1;
+    }
+    else{
+        led[2]=led[2]&amp;(~(1&lt;&lt;2));
+        c[12]=0;
+    }
+    randLED();
+}
+function led23()
+{
+    if(c[13]==0)
+    {
+        led[2]=led[2]|(1&lt;&lt;1);
+        c[13]=1;
+    }
+    else{
+        led[2]=led[2]&amp;(~(1&lt;&lt;1));
+        c[13]=0;
+    }
+    randLED();
+}
+function led24()
+{
+    if(c[14]==0)
+    {
+        led[2]=led[2]|(1&lt;&lt;0);
+        c[14]=1;
+    }
+    else{
+        led[2]=led[2]&amp;(~(1&lt;&lt;0));
+        c[14]=0;
+    }
+    randLED();
+}
+
+function led30()                   //第四行
+{
+    if(c[15]==0)
+    {
+        led[3]=led[3]|(1&lt;&lt;4);
+        c[15]=1;
+    }
+    else{
+        led[3]=led[3]&amp;(~(1&lt;&lt;4));
+        c[15]=0;
+    }
+    randLED();
+}
+function led31()
+{
+    if(c[16]==0)
+    {
+        led[3]=led[3]|(1&lt;&lt;3);
+        c[16]=1;
+    }
+    else{
+        led[3]=led[3]&amp;(~(1&lt;&lt;3));
+        c[16]=0;
+    }
+    randLED();
+}
+function led32()
+{
+    if(c[17]==0)
+    {
+        led[3]=led[3]|(1&lt;&lt;2);
+        c[17]=1;
+    }
+    else{
+        led[3]=led[3]&amp;(~(1&lt;&lt;2));
+        c[17]=0;
+    }
+    randLED();
+}
+function led33()
+{
+    if(c[18]==0)
+    {
+        led[3]=led[3]|(1&lt;&lt;1);
+        c[18]=1;
+    }
+    else{
+        led[3]=led[3]&amp;(~(1&lt;&lt;1));
+        c[18]=0;
+    }
+    randLED();
+}
+function led34()
+{
+    if(c[19]==0)
+    {
+        led[3]=led[3]|(1&lt;&lt;0);
+        c[19]=1;
+    }
+    else{
+        led[3]=led[3]&amp;(~(1&lt;&lt;0));
+        c[19]=0;
+    }
+    randLED();
+}
+function led40()                   //第五行
+{
+    if(c[20]==0)
+    {
+        led[4]=led[4]|(1&lt;&lt;4);
+        c[20]=1;
+    }
+    else{
+        led[4]=led[4]&amp;(~(1&lt;&lt;4));
+        c[20]=0;
+    }
+    randLED();
+}
+function led41()
+{
+    if(c[21]==0)
+    {
+        led[4]=led[4]|(1&lt;&lt;3);
+        c[21]=1;
+    }
+    else{
+        led[4]=led[4]&amp;(~(1&lt;&lt;3));
+        c[21]=0;
+    }
+    randLED();
+}
+function led42()
+{
+    if(c[22]==0)
+    {
+        led[4]=led[4]|(1&lt;&lt;2);
+        c[22]=1;
+    }
+    else{
+        led[4]=led[4]&amp;(~(1&lt;&lt;2));
+        c[22]=0;
+    }
+    randLED();
+}
+function led43()
+{
+    if(c[23]==0)
+    {
+        led[4]=led[4]|(1&lt;&lt;1);
+        c[23]=1;
+    }
+    else{
+        led[4]=led[4]&amp;(~(1&lt;&lt;1));
+        c[23]=0;
+    }
+    randLED();
+}
+function led44()
+{
+    if(c[24]==0)
+    {
+        led[4]=led[4]|(1&lt;&lt;0);
+        c[24]=1;
+    }
+    else{
+        led[4]=led[4]&amp;(~(1&lt;&lt;0));
+        c[24]=0;
+    }
+    randLED();
+}</code></pre><p>效果如图：</p>
 <p><img src="https://imgwdnm.oss-cn-hangzhou.aliyuncs.com/QQ%E5%9B%BE%E7%89%87.png" alt=""></p>
 
             </div>
@@ -1606,10 +1226,12 @@ function readModelNumber()  // 蓝牙信息服务
                     <div class="summary block-with-text">
                         
                             任意控制板上任意一盏灯说明：蓝牙板子上有5*5的矩阵小灯，那么写出25个按键对应小灯就可以了。
-
-    
-    var    selected_device; //选择设备
-    var    connected_server; //
+控制单个小灯亮暗 
+       第一行第一列
+       第一行第二列
+       第一行第三列
+       第一行第四列
+      
                         
                     </div>
                     <div class="publish-info">
